@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+set -e
+
+# Create the install destination directory
+# TODO: customize via args
+TARGET="$HOME/.pushit"
+mkdir -p $TARGET
+
+# Get script directory in case this is run from elsewhere
+INSTALL_SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# TODO: determine which audio playing bins we have and what formats they support
+cp $INSTALL_SOURCE_DIR/assets/push.ogg $TARGET/
+cp $INSTALL_SOURCE_DIR/src/git $TARGET/
+
+# Ensure the shim is executable
+chmod +x $TARGET/git
+
+# Add shim to path
+PROFILE="$HOME/.bash_profile"
+echo "export PATH=\"$TARGET:$PATH\"" >> $PROFILE
